@@ -5,7 +5,7 @@ import { Shop } from './_components/_Shop/Shop';
 import lockedSymbol from './assets/locked.svg';
 import playSymbol from './assets/play.svg';
 import padlockSymbol from './assets/padlock.svg';
-import './App.css';
+import './app.css'
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 

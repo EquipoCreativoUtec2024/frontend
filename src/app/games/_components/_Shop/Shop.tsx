@@ -1,10 +1,9 @@
 import React from 'react';
-import './Shop.css';
-import dolar from './dolar.svg'
-import outline from './abajo.png'
-import bottle from './beer-bottle.png'
-import profile from './profile.png'
-import Image from 'next/image';
+import '../../app.css'
+import dolar from '../../assets/dolar.svg'
+import outline from '../../assets/abajo.png'
+import bottle from '../../assets/beer-bottle.png'
+import profile from '../../assets/profile.png'
 
 import { GameCard } from '../GameCard';
 
