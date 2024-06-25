@@ -6,8 +6,15 @@ import lockedSymbol from './assets/locked.svg';
 import playSymbol from './assets/play.svg';
 import padlockSymbol from './assets/padlock.svg';
 import './App.css';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export function App() {
+  const router = useRouter();
+  const userData = Cookies.get('userData');
+  if (!userData) {
+    router.push('/auth');
+  }
 
   const gameCardsMenu = [
     { color: 'yellow', symbol: playSymbol, prize: "5" },
