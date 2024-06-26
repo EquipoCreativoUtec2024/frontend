@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import "../App.css";
+import "../app.css";
 
 export interface GameCardProps {
   gameCards: {

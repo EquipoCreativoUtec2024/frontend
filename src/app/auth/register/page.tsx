@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import logo from "../logo-text-and-beer.png";
+import logo from "@app/assets/logo-text-and-beer.png";
 import Link from "next/link";
 
 export default function login() {

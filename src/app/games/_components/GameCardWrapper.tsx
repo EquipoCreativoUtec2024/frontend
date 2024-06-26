@@ -4,7 +4,7 @@ import bottle from "../assets/beer-bottle.png";
 import shop from "../assets/shop.png";
 import { GameCard } from "./GameCard";
 import Image from "next/image";
-import "../App.css";
+import "../app.css";
 
 export interface GameCardWrapperProps {
   gameCards: {

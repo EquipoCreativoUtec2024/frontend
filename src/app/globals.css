@@ -31,3 +31,71 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-gray100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 15 15 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-blue {
+  background-color: #2D0AFF;
+}
+
+.bg-purple {
+  background-color: #A500FF;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+.animate-spin {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.circle-spinner {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.circle {
+  box-sizing: border-box;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 8px solid #800080;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.text-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.animation-container {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
