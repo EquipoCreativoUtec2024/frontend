@@ -1,4 +1,4 @@
-import '../shotsEnRaya.css'
+import '../shots.css'
 
 export interface SquareProps {
   children: string

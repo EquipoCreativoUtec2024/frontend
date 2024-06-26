@@ -1,4 +1,4 @@
-import "../shotsEnRaya.css";
+import "../shots.css";
 import { Square } from "./Square";
 
 export interface WinnerModalProps {
