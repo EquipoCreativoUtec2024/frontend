@@ -4,34 +4,19 @@ import dolar from '../../assets/dolar.svg'
 import outline from '../../assets/abajo.png'
 import bottle from '../../assets/beer-bottle.png'
 import profile from '../../assets/profile.png'
+import Image from 'next/image'
 
 import { GameCard } from '../GameCard';
+import { GameCardRenderData } from '../GameCard';
 
 export interface ShopProps {
-    gameCards: {
-        color: string;
-        symbol: string;
-        prize: string;
-    }[];
+    gameCards: GameCardRenderData[];
     onNavigate: (view: string) => void;
     }
 
 export function Shop({ gameCards, onNavigate }: ShopProps) {
   return (
     <>
-      <header className='header-shop'>
-        <div className="person-icon">
-          <button className='profile-button'>
-            <Image src={profile} alt="Ícono de perfil" />
-          </button>
-        </div>
-
-        <div className="right-section">
-          <button className="add-button">+</button>
-          <Image src={bottle} alt="Ícono de botella" />
-        </div>
-      </header>
-
       <div className="unlock-all">
         <Image src={dolar} alt="Ícono de dolar" className='dolar-icon' />
         <div className="unlock-text">
@@ -42,7 +27,7 @@ export function Shop({ gameCards, onNavigate }: ShopProps) {
 
       <main className="grid-container">
         <div className="grid">
-          <GameCard gameCards={gameCards} />
+          <GameCard gameCards={gameCards} isStore={true}/>
         </div>
       </main>
 
