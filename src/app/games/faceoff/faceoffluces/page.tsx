@@ -1,4 +1,4 @@
-import FaceoffLuces from "../components/faceoffluces";
+import FaceoffLuces from "../_components/faceoffluces";
 
 export default function FaceoffLucesPage() {
   return <FaceoffLuces />;

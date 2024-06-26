@@ -1,4 +1,4 @@
-import Faceoff from "../components/faceoff";
+import Faceoff from "../_components/faceoff";
 import Image from "next/image";
 import logo from "@app/assets/logo-text-and-beer.png";
 
