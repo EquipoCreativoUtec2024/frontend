@@ -22,7 +22,7 @@ function App() {
     setLoser(null)
   }
 
-  const updateBoard = (index: Number) => {
+  const updateBoard = (index: any) => {
     // si ya tiene algo, no se actualiza esta posición o ya hay ganador
     if (board[index] || winner) return
 
