@@ -6,7 +6,7 @@ import { TURNS } from './constants'
 import { checkWinnerFrom, checkEndGame } from './_logic/board'
 import { WinnerModal } from './_components/WinnerModal'
 import { UpdateBoard } from './_components/UpdateBoard'
-import './index.css'
+import './shots.css'
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null))

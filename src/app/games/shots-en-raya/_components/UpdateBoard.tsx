@@ -1,4 +1,4 @@
-import '../shotsEnRaya.css'
+import '../shots.css'
 import { Square } from './Square'
 
 export interface UpdateBoardProps {
@@ -16,7 +16,6 @@ export const UpdateBoard = ({ board, updateBoard } : UpdateBoardProps) => {
               key={index}
               index={index}
               updateBoard={updateBoard}
-              isSelected={square !== null}
             >
               {square}
             </Square>
