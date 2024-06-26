@@ -16,6 +16,7 @@ export const UpdateBoard = ({ board, updateBoard } : UpdateBoardProps) => {
               key={index}
               index={index}
               updateBoard={updateBoard}
+              isSelected={square !== null}
             >
               {square}
             </Square>
