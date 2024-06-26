@@ -2,8 +2,11 @@
 import React, { useState, useEffect, use } from "react";
 import { CardData } from "./_components/Card";
 import Card from "./_components/Card";
+import Link from "next/link";
+import Cookies from "js-cookie";
 
 function CanasJugar() {
+  const userData = JSON.parse(Cookies.get("userData") ?? "{}");
   const [questions, setQuestions] = useState<CardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [votedQuestions, setVotedQuestions] = useState<Number[]>([]);
@@ -69,6 +72,17 @@ function CanasJugar() {
       setCurrentIndex(0);
       setQuestions(questions.sort(() => Math.random() - 0.5));
     }
+    if (currentIndex % 10 === 0) {
+      fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userData.username["S"],
+        }),
+      });
+    }
   };
 
   return (
@@ -81,7 +95,7 @@ function CanasJugar() {
         type={questions[currentIndex]?.type}
         id={questions[currentIndex]?.id}
       />
-      <div className="flex flex-col justify-center items-center mb-24">
+      <div className="flex flex-col justify-center items-center mb-16">
         <div className="flex justify-center">
           <button
             className={`${
@@ -115,6 +129,9 @@ function CanasJugar() {
           Siguiente
         </button>
       </div>
+      <Link className="mb-8 text-gray-400 hover:text-gray-700" href={"/games"}>
+        Volver
+      </Link>
     </div>
   );
 }
