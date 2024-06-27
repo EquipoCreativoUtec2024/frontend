@@ -1,3 +1,4 @@
+"use client";
 import Faceoff from "../_components/faceoff";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
