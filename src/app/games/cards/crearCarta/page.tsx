@@ -70,14 +70,14 @@ function cardCreation() {
       </a>
       <input
         type="text"
-        className="p-4 text-lg w-3/4 max-w-xl text-black rounded-full"
+        className="p-4 text-lg w-3/4 max-w-xl text-black rounded-full bg-white"
         placeholder="Texto de la carta"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />
       <div className="flex">
         <select
-          className="p-4 pr-2 w-40 text-lg text-black rounded-full mt-4 mx-4"
+          className="p-4 pr-2 w-40 text-lg text-black rounded-full mt-4 mx-4 bg-white"
           value={type}
           onChange={(e) => setType(e.target.value)}
           style={{

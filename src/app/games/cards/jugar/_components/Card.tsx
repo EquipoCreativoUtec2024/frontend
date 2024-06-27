@@ -14,11 +14,11 @@ function Card({ question, likes, dislikes, author, type }: CardData) {
   const getCardBackgorund = (type: string) => {
     switch (type) {
       case "question":
-        return "bg-blue-200";
+        return "bg-blue-500";
       case "challenge":
-        return "bg-red-400";
+        return "bg-red-500";
       default:
-        return "bg-purple-200";
+        return "bg-purple-500";
     }
   };
 
@@ -42,7 +42,7 @@ function Card({ question, likes, dislikes, author, type }: CardData) {
       <div className="flex flex-col justify-between h-full p-4">
         <div className="flex justify-between">
           <h1 className="text-lg font-bold">{question}</h1>
-          <div className="flex justify-between w-14 bg-black bg-opacity-10 rounded-xl h-6 mt-2">
+          <div className="flex justify-between w-14 bg-white bg-opacity-25 rounded-xl h-6 mt-2">
             <button className="mx-2 text-green-400">{likes}</button>
             <button className="mx-2 text-red-700">{dislikes}</button>
           </div>
