@@ -98,7 +98,7 @@ export function App() {
           symbol: lockedSymbol,
           price: "7",
           pretty_name: game.pretty_name,
-          route: game.route,
+          route: '',
         };
       }
     });
