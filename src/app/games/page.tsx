@@ -119,6 +119,10 @@ export function App() {
     router.push("/auth");
   };
 
+  const handleModifyUser = () => {
+    router.push("/auth/editUser");
+  };
+
   if (!parsedUserData || parsedUserData === undefined) {
     return <></>;
   }
@@ -132,7 +136,7 @@ export function App() {
           </button>
           {profileMenuVisibility && (
             <div className="absolute top-full left-0 mt-2 w-48 bg-black shadow-md rounded-lg z-50">
-              <button className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg ">
+              <button className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg " onClick={handleModifyUser}>
                 Modificar perfil
               </button>
               <button
