@@ -11,29 +11,19 @@ import { GameCardProps } from "./GameCard";
 export interface GameCardWrapperProps {
   gameCards: GameCardRenderData[];
   isStore: boolean;
-  onNavigate: (view: string) => void;
 }
 
 export function GameCardWrapper({
   gameCards,
-  onNavigate,
   isStore,
 }: GameCardWrapperProps) {
   return (
     <>
       <main className="grid-container">
         <div className="grid">
-          <GameCard gameCards={gameCards} isStore={isStore}/>
+          <GameCard gameCards={gameCards} />
         </div>
       </main>
-
-      <footer className="footer">
-        <Image src={shop} alt="Ícono de tienda" className="shop-icon" />
-        <button className="shop-button" onClick={() => onNavigate("shop")}>
-          {" "}
-          Shop{" "}
-        </button>
-      </footer>
     </>
   );
 }

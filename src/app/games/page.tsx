@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { GameCardWrapper } from "./_components/GameCardWrapper";
-import { Shop } from "./_components/_Shop/Shop";
 import lockedSymbol from "./assets/locked.svg";
 import playSymbol from "./assets/play.svg";
-import padlockSymbol from "./assets/padlock.svg";
 import "./app.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -24,10 +22,12 @@ export function App() {
   const router = useRouter();
   const userData = Cookies.get("userData");
   const parsedUserData = JSON.parse(userData ?? "{}");
+  const [currency, setCurrency] = useState<number>(0);
   const [gamesData, setGamesData] = useState<FetchDataGames[]>([]);
+  const [storeData, setStoreData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [gamesCardMenu, setGamesCardMenu] = useState<GameCardRenderData[]>([]);
-  const [gamesCardShop, setGamesCardShop] = useState<GameCardRenderData[]>([]);
+  const [profileMenuVisibility, setProfileMenuVisibility] = useState(false);
 
   if (!userData) {
     router.push("/auth");
@@ -56,8 +56,8 @@ export function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setGamesCardShop(data);
         console.log("Store Data", data);
+        setStoreData(data);
       });
     fetch(
       "https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user/currency?username=" +
@@ -71,15 +71,13 @@ export function App() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Currency Data", data);
-        parsedUserData.currency = {"N": data["currency"]};
+        parsedUserData.currency = { N: data["currency"] };
         Cookies.set("userData", JSON.stringify(parsedUserData));
-        console.log(parsedUserData);
       });
   }, []);
 
   useEffect(() => {
-    if (gamesData.length === 0 || userData === undefined) {
+    if (gamesData.length === 0 || userData === undefined || storeData === undefined || storeData.length === 0) {
       return;
     }
 
@@ -88,70 +86,76 @@ export function App() {
         return {
           color: game.color,
           symbol: playSymbol,
-          price: "5",
           pretty_name: game.pretty_name,
           route: game.route,
+          unlocked: true,
         };
       } else {
+        const gameStoreData = storeData.find((storeItem) => storeItem.item_name === game.id) as any;
         return {
           color: game.color,
           symbol: lockedSymbol,
-          price: "7",
+          price_real: gameStoreData?.cost_real,
+          price_in_game_currency: gameStoreData?.cost_in_game,
           pretty_name: game.pretty_name,
-          route: '',
+          route: "",
+          unlocked: false,
         };
       }
     });
     setGamesCardMenu(gameCardsMenu);
   }, [gamesData]);
 
-  const gameCardsShop = [
-    { color: "white", symbol: playSymbol, price: "7" },
-    { color: "aquamarine", symbol: padlockSymbol, price: "4" },
-    { color: "gray", symbol: padlockSymbol, price: "5" },
-    { color: "white", symbol: playSymbol, price: "10" },
-  ];
+  useEffect(() => {
+    setCurrency(parsedUserData.currency["N"]);
+  }, [parsedUserData]);
 
-  const [currentView, setCurrentView] = useState("gameCardWrapper");
-
-  const handleNavigate = (view: string) => {
-    setCurrentView(view);
+  const profileMenuToggle = () => {
+    setProfileMenuVisibility(!profileMenuVisibility);
   };
 
-  useEffect(() => {
-    if (currentView === "gameCardWrapper") {
-      document.title = "Menú | BlackOut In An App";
-    } else if (currentView === "shop") {
-      document.title = "Shop | BlackOut In An App";
-    }
-  }, [currentView]);
+  const handleLogOut = () => {
+    Cookies.remove("userData");
+    router.push("/auth");
+  };
+
+  if (!parsedUserData || parsedUserData === undefined) {
+    return <></>;
+  }
 
   return (
     <>
       <header className="header">
         <div className="person-icon">
-          <button className="profile-button">
+          <button className="profile-button" onClick={profileMenuToggle}>
             <Image src={profile} alt="Ícono de perfil" />
           </button>
+          {profileMenuVisibility && (
+            <div className="absolute top-full left-0 mt-2 w-48 bg-black shadow-md rounded-lg z-50">
+              <button className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg ">
+                Modificar perfil
+              </button>
+              <button
+                className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg "
+                onClick={handleLogOut}
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="right-section">
           <button className="add-button">+</button>
-          {parsedUserData.currency["N"]}{" "}
+          {currency}{" "}
           <Image src={bottle} alt="Ícono de botella" />
         </div>
       </header>
-      
-      {currentView === "gameCardWrapper" && (
-        <GameCardWrapper
-          gameCards={gamesCardMenu}
-          isStore={false}
-          onNavigate={handleNavigate}
-        />
-      )}
-      {currentView === "shop" && (
-        <Shop gameCards={gameCardsShop} onNavigate={handleNavigate} />
-      )}
+
+      <GameCardWrapper
+        gameCards={gamesCardMenu}
+        isStore={false}
+      />
     </>
   );
 }
