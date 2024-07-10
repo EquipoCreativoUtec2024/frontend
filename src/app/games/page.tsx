@@ -26,7 +26,7 @@ export function App() {
   const [gamesData, setGamesData] = useState<FetchDataGames[]>([]);
   const [storeData, setStoreData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [gamesCardMenu, setGamesCardMenu] = useState<GameCardRenderData[]>([]);
+  const [allGames, setAllGames] = useState<GameCardRenderData[]>([]);
   const [profileMenuVisibility, setProfileMenuVisibility] = useState(false);
 
   if (!userData) {
@@ -103,7 +103,7 @@ export function App() {
         };
       }
     });
-    setGamesCardMenu(gameCardsMenu);
+    setAllGames(gameCardsMenu);
   }, [gamesData]);
 
   useEffect(() => {
@@ -157,7 +157,7 @@ export function App() {
       </header>
 
       <GameCardWrapper
-        gameCards={gamesCardMenu}
+        gameCards={allGames}
       />
     </>
   );
