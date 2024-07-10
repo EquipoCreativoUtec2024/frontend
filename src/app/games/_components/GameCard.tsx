@@ -15,7 +15,7 @@ export interface GameCardRenderData {
   symbol: any;
   price_real?: string;
   price_in_game_currency?: string;
-  description?: string;
+  description?: string
   pretty_name: string;
   route: string;
   unlocked: boolean;
@@ -143,7 +143,7 @@ export const GameCard = ({ gameCards }: GameCardProps) => {
             }}
           >
             <h2 className="text-3xl mb-2">{card.pretty_name}</h2>
-            <h3 className="text-xl text-balance mb-4 px-1">{card.description ? card.description['S'] : null} </h3>
+            <h3 className="text-xl text-balance mb-4 px-1">{card.description ? card.description : null} </h3>
             <h3 className="price mb-6">
               S./ {card.price_real} | {" "}
               <Image

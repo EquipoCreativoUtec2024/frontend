@@ -96,7 +96,7 @@ export function App() {
           symbol: lockedSymbol,
           price_real: gameStoreData?.cost_real,
           price_in_game_currency: gameStoreData?.cost_in_game,
-          description: gameStoreData?.description,
+          description: gameStoreData?.description['S'],
           pretty_name: game.pretty_name,
           route: "",
           unlocked: false,
