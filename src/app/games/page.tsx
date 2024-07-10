@@ -56,7 +56,6 @@ export function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Store Data", data);
         setStoreData(data);
       });
     fetch(
@@ -97,6 +96,7 @@ export function App() {
           symbol: lockedSymbol,
           price_real: gameStoreData?.cost_real,
           price_in_game_currency: gameStoreData?.cost_in_game,
+          description: gameStoreData?.description,
           pretty_name: game.pretty_name,
           route: "",
           unlocked: false,
