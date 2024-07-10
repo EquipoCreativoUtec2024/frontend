@@ -29,13 +29,13 @@ export function App() {
   const [allGames, setAllGames] = useState<GameCardRenderData[]>([]);
   const [profileMenuVisibility, setProfileMenuVisibility] = useState(false);
 
-  if (!userData) {
+  if (!userData || userData === undefined || parsedUserData?.username === undefined) {
     router.push("/auth");
   }
 
   useEffect(() => {
-    if (!userData) {
-      router.push("/auth");
+    if (!userData || userData === undefined || parsedUserData?.username === undefined || parsedUserData === undefined || parsedUserData === JSON.parse("{}"))  {
+      return
     }
     fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/game", {
       method: "GET",
@@ -73,7 +73,8 @@ export function App() {
         parsedUserData.currency = { N: data["currency"] };
         Cookies.set("userData", JSON.stringify(parsedUserData));
       });
-  }, []);
+      setCurrency(parsedUserData.currency["N"]);
+  }, [parsedUserData]);
 
   useEffect(() => {
     if (gamesData.length === 0 || userData === undefined || storeData === undefined || storeData.length === 0) {
@@ -105,10 +106,6 @@ export function App() {
     });
     setAllGames(gameCardsMenu);
   }, [gamesData]);
-
-  useEffect(() => {
-    setCurrency(parsedUserData.currency["N"]);
-  }, [parsedUserData]);
 
   const profileMenuToggle = () => {
     setProfileMenuVisibility(!profileMenuVisibility);

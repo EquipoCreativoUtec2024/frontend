@@ -3,16 +3,22 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "@app/assets/logo-text-and-beer.png";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function editUser() {
+  const parsedUserData = JSON.parse(Cookies.get("userData") ?? "{}");
   const changPasswordURL =
-    "";
+    "https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/password";
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleRegisterClick = () => {
+    if (parsedUserData?.username === "" || parsedUserData?.username === undefined || parsedUserData === undefined) {
+      setError("Por favor inicie sesión antes de cambiar la contraseña.");
+      return;
+    }
     if (oldPassword === "" || newPassword === "") {
       setError("Por favor ingrese todos los campos.");
       return;
@@ -28,8 +34,9 @@ export default function editUser() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: oldPassword,
-        password: newPassword,
+        username: parsedUserData.username["S"],
+        old_password: oldPassword,
+        new_password: newPassword,
       }),
     })
       .then((response) => {
@@ -37,12 +44,13 @@ export default function editUser() {
         if (response.ok) {
           setError("");
           response.json().then((data) => {
+            Cookies.remove("userData");
             window.location.href = "/auth/login";
           });
         } else if (response.status === 400) {
           setError("La contraseña antigua es incorrecta.");
         } else {
-          console.log("Error");
+          setError("La contraseña antigua ingresada es incorrecta.");
         }
       })
       .catch((error) => {
