@@ -10,12 +10,10 @@ import { GameCardProps } from "./GameCard";
 
 export interface GameCardWrapperProps {
   gameCards: GameCardRenderData[];
-  isStore: boolean;
 }
 
 export function GameCardWrapper({
   gameCards,
-  isStore,
 }: GameCardWrapperProps) {
   return (
     <>

@@ -154,7 +154,6 @@ export function App() {
 
       <GameCardWrapper
         gameCards={gamesCardMenu}
-        isStore={false}
       />
     </>
   );
