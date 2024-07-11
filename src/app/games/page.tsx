@@ -29,15 +29,25 @@ export function App() {
   const [allGames, setAllGames] = useState<GameCardRenderData[]>([]);
   const [profileMenuVisibility, setProfileMenuVisibility] = useState(false);
 
-  if (!userData || userData === undefined || parsedUserData?.username === undefined) {
+  if (
+    !userData ||
+    userData === undefined ||
+    parsedUserData?.username === undefined
+  ) {
     router.push("/auth");
   }
 
   useEffect(() => {
-    if (!userData || userData === undefined || parsedUserData?.username === undefined || parsedUserData === undefined || parsedUserData === JSON.parse("{}"))  {
-      return
+    if (
+      !userData ||
+      userData === undefined ||
+      parsedUserData?.username === undefined ||
+      parsedUserData === undefined ||
+      parsedUserData === JSON.parse("{}")
+    ) {
+      return;
     }
-    fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/game", {
+    fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/games", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +58,7 @@ export function App() {
         setGamesData(data);
         setIsLoading(false);
       });
-    fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/store", {
+    fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/store", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +69,7 @@ export function App() {
         setStoreData(data);
       });
     fetch(
-      "https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user/currency?username=" +
+      "https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/currency?username=" +
         parsedUserData.username["S"],
       {
         method: "GET",
@@ -73,14 +83,18 @@ export function App() {
         parsedUserData.currency = { N: data["currency"] };
         Cookies.set("userData", JSON.stringify(parsedUserData));
       });
-      setCurrency(parsedUserData.currency["N"]);
-  }, [parsedUserData]);
+    setCurrency(parsedUserData.currency["N"]);
+  }, [userData]);
 
   useEffect(() => {
-    if (gamesData.length === 0 || userData === undefined || storeData === undefined || storeData.length === 0) {
+    if (
+      gamesData.length === 0 ||
+      userData === undefined ||
+      storeData === undefined ||
+      storeData.length === 0
+    ) {  
       return;
     }
-
     const gameCardsMenu: GameCardRenderData[] = gamesData.map((game) => {
       if (parsedUserData.owned_games.SS.includes(game.id)) {
         return {
@@ -91,13 +105,16 @@ export function App() {
           unlocked: true,
         };
       } else {
-        const gameStoreData = storeData.find((storeItem) => storeItem.item_name === game.id) as any;
+        const gameStoreData = storeData.find(
+          (storeItem) => storeItem.item_name === game.id
+        ) as any;
         return {
           color: game.color,
           symbol: lockedSymbol,
           price_real: gameStoreData?.cost_real,
           price_in_game_currency: gameStoreData?.cost_in_game,
-          description: gameStoreData?.description['S'],
+          description: gameStoreData?.description["S"],
+          id: game.id,
           pretty_name: game.pretty_name,
           route: "",
           unlocked: false,
@@ -105,7 +122,8 @@ export function App() {
       }
     });
     setAllGames(gameCardsMenu);
-  }, [gamesData]);
+    console.log(gameCardsMenu);
+  }, [gamesData, storeData]);
 
   const profileMenuToggle = () => {
     setProfileMenuVisibility(!profileMenuVisibility);
@@ -120,8 +138,12 @@ export function App() {
     router.push("/auth/editUser");
   };
 
-  if (!parsedUserData || parsedUserData === undefined) {
-    return <></>;
+  if (isLoading || allGames.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-[100vh]">
+        <div className="h-[20vh] w-[20vh] rounded-full border-y-2 border-l-2 animate-spin"></div>
+      </div>
+    );
   }
 
   return (
@@ -133,7 +155,10 @@ export function App() {
           </button>
           {profileMenuVisibility && (
             <div className="absolute top-full left-0 mt-2 w-48 bg-black shadow-md rounded-lg z-50">
-              <button className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg " onClick={handleModifyUser}>
+              <button
+                className="w-full text-left px-4 py-2 hover:bg-slate-900 rounded-lg "
+                onClick={handleModifyUser}
+              >
                 Modificar perfil
               </button>
               <button
@@ -148,14 +173,10 @@ export function App() {
 
         <div className="right-section">
           <button className="add-button">+</button>
-          {currency}{" "}
-          <Image src={bottle} alt="Ícono de botella" />
+          {currency} <Image src={bottle} alt="Ícono de botella" />
         </div>
       </header>
-
-      <GameCardWrapper
-        gameCards={allGames}
-      />
+      <GameCardWrapper gameCards={allGames} />
     </>
   );
 }

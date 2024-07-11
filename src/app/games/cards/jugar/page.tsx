@@ -14,7 +14,7 @@ function CanasJugar() {
   const [dislikedQuestions, setDislikedQuestions] = useState<Number[]>([]);
 
   useEffect(() => {
-    fetch("http://54.88.183.156:5000/questions", {
+    fetch("http://52.203.44.132:5000/questions", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ function CanasJugar() {
       return;
     }
     setVotedQuestions([...votedQuestions, id]);
-    fetch("http://54.88.183.156:5000/questions", {
+    fetch("http://52.203.44.132:5000/questions", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function CanasJugar() {
       setQuestions(questions.sort(() => Math.random() - 0.5));
     }
     if (currentIndex % 10 === 0) {
-      fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user", {
+      fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

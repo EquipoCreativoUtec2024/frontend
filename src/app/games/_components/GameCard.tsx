@@ -16,6 +16,7 @@ export interface GameCardRenderData {
   price_real?: string;
   price_in_game_currency?: string;
   description?: string
+  id?: string;
   pretty_name: string;
   route: string;
   unlocked: boolean;
@@ -90,7 +91,35 @@ export const GameCard = ({ gameCards }: GameCardProps) => {
       const newBuyMenuErrors = [...buyMenuErrors];
       newBuyMenuErrors[index] = "";
       setBuyMenuErrors(newBuyMenuErrors);
-      // TODO: Handle buy on back
+      fetch('https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev//buy', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: parsedUserData.username["S"],
+          game_id: card.id,
+          price: card.price_in_game_currency,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              const newUserData = { ...parsedUserData };
+              newUserData.owned_games["SS"].push(card.id);
+              Cookies.set("userData", JSON.stringify(newUserData));
+              router.push("/");
+              handleCloseBuyMenu(index);
+            });
+          } else {
+            const newBuyMenuErrors = [...buyMenuErrors];
+            newBuyMenuErrors[index] = "Hubo un error al comprar el juego";
+            setBuyMenuErrors(newBuyMenuErrors);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });        
     } else {
       // Compra con dinero real
       const newBuyMenuErrors = [...buyMenuErrors];
@@ -133,7 +162,7 @@ export const GameCard = ({ gameCards }: GameCardProps) => {
         </div>
         <div
           className={`absolute flex justify-center items-center top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10 cursor-default ${
-            buyMenuVisibility[index] === false ? "hidden" : ""
+            !buyMenuVisibility[index] ? "hidden" : ""
           }`}
         >
           <div

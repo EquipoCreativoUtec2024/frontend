@@ -82,7 +82,7 @@ const FaceoffLuces = () => {
       return;
     }
     const username = JSON.parse(userData).username;
-    fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user", {
+    fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +101,7 @@ const FaceoffLuces = () => {
       return;
     }
     const username = JSON.parse(userData).username;
-    fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user", {
+    fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

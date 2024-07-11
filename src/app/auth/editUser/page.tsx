@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 export default function editUser() {
   const parsedUserData = JSON.parse(Cookies.get("userData") ?? "{}");
   const changPasswordURL =
-    "https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/password";
+    "https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/password";
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);

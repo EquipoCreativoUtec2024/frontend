@@ -26,7 +26,7 @@ function cardCreation() {
     setError("");
     setLoading(true);
     try {
-      fetch("https://8zpbnlo7dd.execute-api.us-east-1.amazonaws.com/dev/user", {
+      fetch("https://e628hdshuc.execute-api.us-east-1.amazonaws.com/dev/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ function cardCreation() {
         }),
       });
       fetch(
-        "http://54.88.183.156:5000/questions",
+        "http://52.203.44.132:5000/questions",
         {
           method: "POST",
           headers: {
